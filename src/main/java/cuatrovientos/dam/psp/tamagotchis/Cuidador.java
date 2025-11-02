@@ -1,7 +1,6 @@
 package cuatrovientos.dam.psp.tamagotchis;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,6 +49,8 @@ public class Cuidador {
 			tamagotchis.add(new Tamagotchi(nombresTamagotchi.get(i)));
 			System.out.println("El tamagotchi " + tamagotchis.get(i).getNombre() + " ha sido añadido.");
 		}
-
+		
+		for (Tamagotchi t : tamagotchis)
+            new Thread(t).start();
 	}
 }

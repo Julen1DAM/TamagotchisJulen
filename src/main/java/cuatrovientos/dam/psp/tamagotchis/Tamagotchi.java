@@ -23,7 +23,7 @@ public class Tamagotchi implements Runnable {
 			try {
 				Thread.sleep((long) ((Math.random() * 20001) + 10000));
 				suciedad++;
-				if (suciedad == 5) System.out.println(nombre + " está sucio, lávalo");
+				if (suciedad == 5) System.out.println(nombre + " está sucio/a, lávalo/a");
 				if (suciedad == 10) {
 					System.out.println(nombre + " estaba demasiado sucio/a y se ha enfermado por ello.");
 					morir();
