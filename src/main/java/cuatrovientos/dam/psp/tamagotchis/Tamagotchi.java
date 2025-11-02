@@ -34,8 +34,10 @@ public class Tamagotchi implements Runnable {
 	public void comer() {
 		if (!vivo) {
 			System.out.println(nombre + " no puede comer, está muerto/a");
+			return;
 		} else if (ocupado) {
 			System.out.println(nombre + " no puede comer, está ocupado/a");
+			return;
 		}
 		ocupado = true;
 		new Thread(() -> {
@@ -52,8 +54,10 @@ public class Tamagotchi implements Runnable {
 	public void jugar() {
 		if (!vivo) {
 			System.out.println(nombre + " no puede jugar, está muerto/a");
+			return;
 		} else if (ocupado) {
 			System.out.println(nombre + " no puede jugar, está ocupado/a");
+			return;
 		}
 		new Thread(() -> {
 			int num1, num2, resultado, respuesta;
@@ -77,8 +81,36 @@ public class Tamagotchi implements Runnable {
 					System.out.println(nombre + " se confunde. Buscaba un numero entero.");
 				}
 			}
-			;
-		});
+		});	
 	}
-
+	public void limpiar() {
+		if (!vivo) {
+			System.out.println(nombre + " no puede jugar, está muerto/a");
+			return;
+		} else if (ocupado) {
+			System.out.println(nombre + " no puede jugar, está ocupado/a");
+			return;
+		}
+        ocupado = true;
+        new Thread(() -> {
+            System.out.println(nombre + " se está bañando");
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {}
+            suciedad = 0;
+            System.out.println(nombre + " ya está limpio/a");
+            ocupado = false;
+        }).start();
+    }
+	public void morir() {
+		if (!vivo) {
+			System.out.println(nombre + " no puede morir, ya está muerto/a");
+		}
+		if(ocupado) {
+			System.out.println("a " + nombre + " no le apetece morir, está ocupado/a");
+			return;
+		}
+		vivo = false;
+		System.out.println(nombre + " ha muerto");
+	}
 }
