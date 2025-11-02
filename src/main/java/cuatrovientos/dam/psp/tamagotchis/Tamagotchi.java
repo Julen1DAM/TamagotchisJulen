@@ -59,15 +59,20 @@ public class Tamagotchi implements Runnable {
 			return;
 		}
 		ocupado = true;
-		new Thread(() -> {
+		Thread hilo = new Thread(() -> {
 			System.out.println("¡" + nombre + " ha empezado a comer!");
 			try {
 				Thread.sleep(velocidadComer);
 			} catch (InterruptedException e) {
 			}
 			System.out.println("Ha terminado de comer");
-			ocupado = false;
-		}).start();
+		});
+		hilo.start();
+
+        try {
+            hilo.join();
+        } catch (InterruptedException e) {}
+        ocupado = false;
 	}
 
 	public void jugar() {
@@ -78,14 +83,14 @@ public class Tamagotchi implements Runnable {
 			System.out.println(nombre + " no puede jugar, está ocupado/a");
 			return;
 		}
-		new Thread(() -> {
+		Thread hilo = new Thread(() -> {
 			int num1, num2, resultado, respuesta;
 			String StrRespuesta;
 			do {
 				num1 = (int) (Math.random() * 10);
 				num2 = (int) (Math.random() * 10);
 				resultado = num1 + num2;
-			} while (resultado < 10);
+			} while (resultado > 10);
 			while (true) {
 				System.out.println(nombre + " pregunta: ¿Cuánto es " + num1 + " + " + num2 + "?");
 				StrRespuesta = scan.nextLine();
@@ -100,7 +105,13 @@ public class Tamagotchi implements Runnable {
 					System.out.println(nombre + " se confunde. Buscaba un numero entero.");
 				}
 			}
-		});	
+		});
+		hilo.start();
+
+        try {
+            hilo.join();
+        } catch (InterruptedException e) {}
+        ocupado = false;
 	}
 	public void limpiar() {
 		if (!vivo) {
@@ -111,7 +122,7 @@ public class Tamagotchi implements Runnable {
 			return;
 		}
         ocupado = true;
-        new Thread(() -> {
+        Thread hilo = new Thread(() -> {
             System.out.println(nombre + " se está bañando");
             try {
                 Thread.sleep(5000);
@@ -119,7 +130,13 @@ public class Tamagotchi implements Runnable {
             suciedad = 0;
             System.out.println(nombre + " ya está limpio/a");
             ocupado = false;
-        }).start();
+        });
+        hilo.start();
+
+        try {
+            hilo.join();
+        } catch (InterruptedException e) {}
+        ocupado = false;
     }
 	public void morir() {
 		if (!vivo) {

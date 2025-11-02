@@ -50,7 +50,43 @@ public class Cuidador {
 			System.out.println("El tamagotchi " + tamagotchis.get(i).getNombre() + " ha sido añadido.");
 		}
 		
-		for (Tamagotchi t : tamagotchis)
+		for (Tamagotchi t : tamagotchis) {
             new Thread(t).start();
+		}
+		while (true) {
+            System.out.println("\nAcción: 1) Comer  2) Jugar  3) Limpiar  4) Matar  5) Estado  0) Salir");
+            int opcion = scan.nextInt();
+            if (opcion == 0) break;
+
+            for (int i = 0; i < tamagotchis.size(); i++)
+                System.out.println((i + 1) + ") " + tamagotchis.get(i).getNombre());
+            System.out.print("Selecciona Tamagotchi: ");
+            int indice = scan.nextInt() - 1;
+
+            if (indice < 0 || indice >= tamagotchis.size()) continue;
+            Tamagotchi t = tamagotchis.get(indice);
+
+            switch (opcion) {
+                case 1: 
+                	t.comer();
+                	break;
+                case 2: 
+                	t.jugar();
+                	break;
+                case 3: t.limpiar();
+                	break;
+                case 4: t.morir();
+                	break;
+                case 5: 
+                	if(t.estaVivo()) {
+                		System.out.println(t.getNombre() + " está vivo");
+                	}else {
+                		System.out.println(t.getNombre() + " está muerto");
+                	}
+            }
+        }
+
+        System.out.println("Cerrando programa cuidador...");
+        scan.close();
 	}
 }
