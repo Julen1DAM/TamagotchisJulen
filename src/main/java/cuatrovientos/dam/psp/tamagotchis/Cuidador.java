@@ -10,7 +10,7 @@ public class Cuidador {
 		List<Tamagotchi> tamagotchis = new ArrayList<>();
 		List<String> nombresTamagotchi = new ArrayList<>();
 		Scanner scan = new Scanner(System.in);
-		final int MAX_VELOCIDAD_COMER = 4001;		
+		final int MAX_TAMAGOTCHIS = 7;		
 		String strCantidad;
 		int cantidad;
 		while (true) {
@@ -20,8 +20,8 @@ public class Cuidador {
 				cantidad = Integer.parseInt(strCantidad);
 				if (cantidad < 1) {
 					System.out.println("debes tener por lo menos un Tamagotchi");
-				} else if (cantidad > MAX_VELOCIDAD_COMER) {
-					System.out.println("Sólo puedes tener hasta " + MAX_VELOCIDAD_COMER + " Tamagotchis.");
+				} else if (cantidad > MAX_TAMAGOTCHIS) {
+					System.out.println("Sólo puedes tener hasta " + MAX_TAMAGOTCHIS + " Tamagotchis.");
 				} else {
 					break;
 				}
