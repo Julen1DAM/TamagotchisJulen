@@ -141,6 +141,7 @@ public class Tamagotchi implements Runnable {
 	public void morir() {
 		if (!vivo) {
 			System.out.println(nombre + " no puede morir, ya está muerto/a");
+			return;
 		}
 		if(ocupado) {
 			System.out.println("a " + nombre + " no le apetece morir, está ocupado/a");
