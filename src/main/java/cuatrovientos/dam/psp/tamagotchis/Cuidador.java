@@ -10,6 +10,7 @@ public class Cuidador {
 		List<Tamagotchi> tamagotchis = new ArrayList<>();
 		List<String> nombresTamagotchi = new ArrayList<>();
 		Scanner scan = new Scanner(System.in);
+		final int MAX_VELOCIDAD_COMER = 4001;		
 		String strCantidad;
 		int cantidad;
 		while (true) {
@@ -19,8 +20,8 @@ public class Cuidador {
 				cantidad = Integer.parseInt(strCantidad);
 				if (cantidad < 1) {
 					System.out.println("debes tener por lo menos un Tamagotchi");
-				} else if (cantidad > 9) {
-					System.out.println("Sólo puedes tener hasta 9 Tamagotchis.");
+				} else if (cantidad > MAX_VELOCIDAD_COMER) {
+					System.out.println("Sólo puedes tener hasta " + MAX_VELOCIDAD_COMER + " Tamagotchis.");
 				} else {
 					break;
 				}
@@ -56,19 +57,15 @@ public class Cuidador {
 		while (true) {
             System.out.println("\nAcción: 1) Comer  2) Jugar  3) Limpiar  4) Matar  5) Estado  0) Salir");
             String opcion = scan.nextLine();
-            if (opcion == "0") break;
+            if (opcion.equals("0")) break;
 
-            for (int i = 0; i < tamagotchis.size(); i++)
+            for (int i = 0; i < tamagotchis.size(); i++) {
             System.out.println((i + 1) + ") " + tamagotchis.get(i).getNombre());
+            }
             System.out.print("Selecciona Tamagotchi: ");
             System.out.print("Introduce un número: ");
-            int indice;
-            while (!scan.hasNextInt()) {
-                System.out.println("Introducir un número entero.");
-                scan.next();
-                System.out.print("Introduce un número: ");
-            }
-            indice = scan.nextInt() - 1;
+            int indice = scan.nextInt() - 1;
+            scan.nextLine();
 
             if (indice < 0 || indice >= tamagotchis.size()) continue;
             Tamagotchi t = tamagotchis.get(indice);

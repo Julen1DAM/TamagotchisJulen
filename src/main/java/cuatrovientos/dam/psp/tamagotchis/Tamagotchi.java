@@ -8,28 +8,47 @@ public class Tamagotchi implements Runnable {
 	private boolean vivo = true;
 	private boolean ocupado = false;
 	private long inicioVida;
+	private int hambre = 0;
 	private int suciedad = 0;
 	private long velocidadComer;
+	
+	private final int TIEMPO_DE_VIDA = 300000;
+	private final int MAX_VELOCIDAD_COMER = 4001;
+	private final int MIN_TIEMPO_ACCION = 5000;
+	private final int MAX_TIEMPO_ACCION = 20001;
+	private final int MAX_NUMEROS_SUMA = 10;
+	private final int MAX_RESULTADO_SUMA = 9;
 
 	public Tamagotchi(String nombre) {
 		this.nombre = nombre;
 		this.inicioVida = System.currentTimeMillis();
-		this.velocidadComer = (long) (Math.random() * 3001);
+		this.velocidadComer = (long) (Math.random() * MAX_VELOCIDAD_COMER);
 	}
 
 	@Override
 	public void run() {
 		while (vivo) {
 			try {
-				Thread.sleep((long) ((Math.random() * 20001) + 10000));
-				suciedad++;
-				if (suciedad == 5) System.out.println(nombre + " está sucio/a, lávalo/a");
-				if (suciedad == 10) {
-					System.out.println(nombre + " estaba demasiado sucio/a y se ha enfermado por ello.");
-					morir();
-					break;
+				Thread.sleep((long) ((Math.random() * MAX_TIEMPO_ACCION) + MIN_TIEMPO_ACCION));
+				int accion = (int) (Math.random() * 2);
+				if (accion == 0) {
+					hambre++;
+					if (hambre == 5) System.out.println(nombre + " tiene hambre, dale de comer");
+					if (hambre == 10) {
+						System.out.println(nombre + " tenía mucha hambre.");
+						morir();
+						break;
+					}
+				}else {
+					suciedad++;
+					if (suciedad == 5) System.out.println(nombre + " está sucio/a, lávalo/a");
+					if (suciedad == 10) {
+						System.out.println(nombre + " estaba demasiado sucio/a y se ha enfermado por ello.");
+						morir();
+						break;
+					}	
 				}
-				 if (System.currentTimeMillis() - inicioVida >= 300000) {
+				 if (System.currentTimeMillis() - inicioVida >= TIEMPO_DE_VIDA) {
 	                    System.out.println(nombre + " ha tenido una buena vida.");
 	                    morir();
 	                    break;
@@ -65,6 +84,7 @@ public class Tamagotchi implements Runnable {
 				Thread.sleep(velocidadComer);
 			} catch (InterruptedException e) {
 			}
+			hambre = 0;
 			System.out.println("Ha terminado de comer");
 		});
 		hilo.start();
@@ -87,10 +107,10 @@ public class Tamagotchi implements Runnable {
 			int num1, num2, resultado, respuesta;
 			String StrRespuesta;
 			do {
-				num1 = (int) (Math.random() * 10);
-				num2 = (int) (Math.random() * 10);
+				num1 = (int) (Math.random() * MAX_NUMEROS_SUMA);
+				num2 = (int) (Math.random() * MAX_NUMEROS_SUMA);
 				resultado = num1 + num2;
-			} while (resultado > 10);
+			} while (resultado > MAX_RESULTADO_SUMA);
 			while (true) {
 				System.out.println(nombre + " pregunta: ¿Cuánto es " + num1 + " + " + num2 + "?");
 				StrRespuesta = scan.nextLine();
@@ -101,7 +121,7 @@ public class Tamagotchi implements Runnable {
 						break;
 					}
 				} catch (NumberFormatException e) {
-					respuesta = 10;
+					respuesta = MAX_RESULTADO_SUMA + 1;
 					System.out.println(nombre + " se confunde. Buscaba un numero entero.");
 				}
 			}
